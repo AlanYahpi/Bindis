@@ -10,23 +10,27 @@
 #include "headers/dataTrans.h"
 #include "headers/renderer.h"
 #include "headers/mini.h"
+#include "headers/config.h"
 
 int main(int agrc, char * argv[]){
 	int isError = 0;
+	struct config config;
+	struct termios newt, oldt;
 
-	if (!isatty(STDOUT_FILENO)) goto end;
+	isError = configure(&config);
+	if (isError) goto end;
+	off_t size = config.width * config.height / CHAR_BIT;
+
+	isError = (!isatty(STDOUT_FILENO));
+	if (isError) goto end;
 
 	int fd = memshareInit();
-	if (fd == -1) return 1;
+	if (fd == -1) goto end;
 
-	struct display display;
-	display.width    = 128;
-	display.height   = 64;
-	display.adrsmode = ADR_H;
-	display.pages    = 8;
-
-	off_t size = display.width * display.height / CHAR_BIT;
 	isError = ftruncate(fd, size);
+	if (isError) goto end;
+
+	isError = initTerminal(&newt, &oldt);
 	if (isError) goto end;
 
 	uint8_t * buffer = 
@@ -37,18 +41,16 @@ int main(int agrc, char * argv[]){
 			MAP_SHARED,
 			fd, 0
 			);
-	uint8_t xdtest[] = {0xC2, 0xff};
+	uint8_t xdtest[] = {0xC2, 0xff, 0b11111101};
 
-	struct termios newt, oldt;
 
-	isError = initTerminal(&newt, &oldt);
 
 
 	while (closeManager()){
 		/*
 		updateTerminal(
 				buffer,
-				display,
+				config,
 				size
 				);
 		*/
@@ -56,8 +58,8 @@ int main(int agrc, char * argv[]){
 		if (
 		updateTerminal(
 				xdtest,
-				display,
-				2
+				config,
+				3
 				)
 		!= 0) goto end;
 		sleep(1);
@@ -66,6 +68,18 @@ int main(int agrc, char * argv[]){
 
 
 end:
+	switch (isError) {
+		case 1:
+			printf("something failed :(\n");
+			break;
+		case 2:
+			printf("Check your config file\n");
+			break;
+		case 3:
+			printf("Do u have a config file?\n");
+			break;
+	
+	}
 	shm_unlink(SHM_NAME);
 	finishTerminal(&oldt);
 	return isError;

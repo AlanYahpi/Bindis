@@ -4,12 +4,18 @@
 
 #define SHM_NAME "/xd"
 
-struct display {
-	uint16_t width;
-	uint16_t height;
-	uint16_t pages; 	//just set 1 if not apply
+struct config {
+	uint32_t width;
+	uint32_t height;
+	uint32_t pages; 	//just set 1 if not apply
 	uint8_t  adrsmode;	
+	uint8_t  updateInterval;
 };
+
+#define FCONFIG "config"
+
+
+//I gotta check if there are more, for now this is for SSD1306
 
 #define ADR_H 0
 #define ADR_V 1

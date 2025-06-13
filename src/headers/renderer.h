@@ -11,14 +11,19 @@
 #include "defs.h"
 
 
-static inline int8_t updateTerminal(uint8_t * buffer, struct display display, uint32_t bufferBytes){
+static inline int8_t updateTerminal(
+			uint8_t * buffer,
+			struct config config,
+			uint32_t bufferBytes
+			){
+
 	struct winsize wnsize;
 	ioctl(STDOUT_FILENO, TIOCGWINSZ, &wnsize);
 
 	if (
-			wnsize.ws_col < display.width 
+			wnsize.ws_col < config.width 
 			||
-			wnsize.ws_row < (display.height/2) 
+			wnsize.ws_row < (config.height/2) 
 			){
 		return 1;
 	}
@@ -49,7 +54,7 @@ static inline int8_t updateTerminal(uint8_t * buffer, struct display display, ui
 			printf(ANSIESC_CDOWN);
 		}
 		if ( 
-				( (bufferBytes + 1) % display.width ) == 0 
+				( (bufferBytes + 1) % config.width ) == 0 
 				) printf(ANSIESC_HABSOLUTE); 
 		printf(ANSIESC_CRIGHT);
 		printf(ANSIESC_CUPX4);
@@ -87,7 +92,9 @@ static inline int8_t initTerminal(
 	return 0;
 }
 
-static inline void finishTerminal(struct termios * oldt){
+static inline void finishTerminal(
+			struct termios * oldt
+			){
 
 	printf(
 			"\033[?1049l"		//back to normal buffer
