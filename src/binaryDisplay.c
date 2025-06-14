@@ -82,6 +82,6 @@ end:
 	
 	}
 	shm_unlink(SHM_NAME);
-	finishTerminal(&oldt);
+	if (isError != 3) finishTerminal(&oldt);
 	return isError;
 }
