@@ -62,7 +62,7 @@ int main(int agrc, char * argv[]){
 				3
 				)
 		!= 0) goto end;
-		sleep(1);
+		sleep(config.updateInterval);
 	}
 
 
