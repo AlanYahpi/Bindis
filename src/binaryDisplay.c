@@ -55,6 +55,7 @@ int main(int agrc, char * argv[]){
 				);
 		*/
 
+		//this is for testing, real one is the upper one
 		if (
 		updateTerminal(
 				xdtest,
