@@ -30,6 +30,7 @@ struct config {
 #define ANSIESC_CLEFTX4		"\033[4D"
 
 #define ANSIESC_HABSOLUTE	"\033[1G"
+#define ANSIESC_VABSOLUTE	"\033[1d"
 
 #define ANSIESC_HOME 		"\033[H"
 
