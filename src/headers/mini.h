@@ -36,9 +36,9 @@ static inline void * keysManager(
 		else if (c == args->binds->keyB) *args->keys |= KEY_B;
 		else if (c == args->binds->keyC) *args->keys |= KEY_C;
 		else if (c == args->binds->keyD) *args->keys |= KEY_D;
+		else if (c == args->binds->keyE) *args->keys |= KEY_E;
 		else if (c == args->binds->keyF) *args->keys |= KEY_F;
 		else if (c == args->binds->keyG) *args->keys |= KEY_G;
-		else if (c == args->binds->keyH) *args->keys |= KEY_H;
 		nanosleep(args->inputInterval, NULL);
 	}
 	return NULL;

@@ -11,9 +11,9 @@ struct binds {
 	char keyB;
 	char keyC;
 	char keyD;
+	char keyE;
 	char keyF;
 	char keyG;
-	char keyH;
 };
 
 struct config {
@@ -71,6 +71,6 @@ typedef struct {
 #define KEY_B 0b00000100
 #define KEY_C 0b00001000
 #define KEY_D 0b00010000
-#define KEY_F 0b00100000
-#define KEY_G 0b01000000
-#define KEY_H 0b10000000
+#define KEY_E 0b00100000
+#define KEY_F 0b01000000
+#define KEY_G 0b10000000

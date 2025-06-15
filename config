@@ -1,20 +1,45 @@
 # Uncomment to use it. If update interval and adressing mode are not set, default values are set as the
 # 	seen in here. If other configuration is not set, program doesn't start.
 #
+# This config file is case sensitive
+#
 # Adressing modes are
 # 0 Horizontal
 # 1 Vertical
 # Check your manufaturer's datasheet
 #
 # (values of 4 digits max)
-# update interval in MS
+# Time in MS
 #
 # width = 128
 # height = 64
 # updateInterval = 1
 # adressingMode = 0
+# 
+# -Advanced-
+# To avoid non captured key press, the input reading interval is 
+# separed from the update one.
+# Default is 1/60*1000 ms (simulating input on a 60fps game)
+#
+# inputInterval = 16
+#
+# GPKEYs
+# Special keys not supported (yet)
+#
+# GPKEY-A = z
+# GPKEY-B = x
+# GPKEY-C = c
+# GPKEY-D = v
+# GPKEY-E = b
+# GPKEY-F = n
+# GPKEY-G = m
+#
+#
+# Special key to exit the program correctly
+# GPKEY-Q = q
 
 width = 128
 height = 64
 updateInterval = 1000
 adressingMode = 1
+

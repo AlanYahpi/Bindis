@@ -19,6 +19,13 @@ static inline int8_t configure(
 	config->adrsmode         = ADR_H;
 
 	config->binds.keyQ = 'q';
+	config->binds.keyA = 'z';
+	config->binds.keyB = 'x';
+	config->binds.keyC = 'c';
+	config->binds.keyD = 'v';
+	config->binds.keyE = 'b';
+	config->binds.keyF = 'n';
+	config->binds.keyG = 'm';
 
 
 	FILE * fconfig = fopen(FCONFIG, "r");
@@ -39,6 +46,17 @@ static inline int8_t configure(
 			else if (!strcmp(stringBuffer, "height"))		  	config->height = intBuffer;
 			else if (!strcmp(stringBuffer, "updateInterval"))  	config->Updateinterval.tv_nsec = intBuffer * MStoNS;
 			else if (!strcmp(stringBuffer, "adressingMode"))  	config->adrsmode = intBuffer;
+			else if (!strcmp(stringBuffer, "inputInterval"))  	config->InputInterval.tv_nsec = intBuffer * MStoNS;
+			else if (!strcmp(stringBuffer, "GPKEY")){
+				if 			(!strcmp(stringBuffer + 5+1, "A")) 			config->binds.keyA = (char) intBuffer;
+				else if 	(!strcmp(stringBuffer + 5+1, "B")) 			config->binds.keyB = (char) intBuffer;
+				else if 	(!strcmp(stringBuffer + 5+1, "C")) 			config->binds.keyC = (char) intBuffer;
+				else if 	(!strcmp(stringBuffer + 5+1, "D")) 			config->binds.keyD = (char) intBuffer;
+				else if 	(!strcmp(stringBuffer + 5+1, "E")) 			config->binds.keyE = (char) intBuffer;
+				else if 	(!strcmp(stringBuffer + 5+1, "F")) 			config->binds.keyF = (char) intBuffer;
+				else if 	(!strcmp(stringBuffer + 5+1, "G")) 			config->binds.keyG = (char) intBuffer;
+				else if 	(!strcmp(stringBuffer + 5+1, "Q")) 			config->binds.keyQ = (char) intBuffer;
+			}
 		}
 
 
