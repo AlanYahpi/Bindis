@@ -16,6 +16,7 @@ int main(int agrc, char * argv[]){
 	int isError = 0;
 	struct config config;
 	struct termios newt, oldt;
+	struct winsize wnsize;
 
 	isError = configure(&config);
 	if (isError) goto end;
@@ -44,31 +45,34 @@ int main(int agrc, char * argv[]){
 	uint8_t xdtest[] = {0xC2, 0xff, 0b11111101};
 
 
-
-
 	while (closeManager()){
 		/*
 		updateTerminal(
 				buffer,
 				config,
-				size
+				size,
+				&wnsize
 				);
 		*/
 
 		//this is for testing, real one is the upper one
-		if (
-		updateTerminal(
+		
+		isError = updateTerminal(
 				xdtest,
 				config,
-				3
-				)
-		!= 0) goto end;
+				3,
+				&wnsize
+				);
+		if (isError) goto end;
 		sleep(config.updateInterval);
 	}
 
 
 
 end:
+	shm_unlink(SHM_NAME);
+	if ( (isError != 2) || (isError != 3) ) finishTerminal(&oldt);
+
 	switch (isError) {
 		case 1:
 			printf("something failed :(\n");
@@ -79,9 +83,16 @@ end:
 		case 3:
 			printf("Do u have a config file?\n");
 			break;
+		case 4:
+			printf("Not enough space in terminal for your dimentions\n");
+			printf("\tTerminal\tConfig\n"
+					"Width\t%i\t\t%u\n"
+					"Height\t%i\t\t%u\n",
+					wnsize.ws_col, config.width,
+					wnsize.ws_row*2, config.height
+					);
+			break;
 	
 	}
-	shm_unlink(SHM_NAME);
-	if (isError != 3) finishTerminal(&oldt);
 	return isError;
 }

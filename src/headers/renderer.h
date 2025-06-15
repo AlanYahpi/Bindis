@@ -14,18 +14,18 @@
 static inline int8_t updateTerminal(
 			uint8_t * buffer,
 			struct config config,
-			uint32_t bufferBytes
+			uint32_t bufferBytes,
+			struct winsize * wnsize
 			){
 
-	struct winsize wnsize;
-	ioctl(STDOUT_FILENO, TIOCGWINSZ, &wnsize);
+	ioctl(STDOUT_FILENO, TIOCGWINSZ, wnsize);
 
 	if (
-			wnsize.ws_col < config.width 
+			wnsize->ws_col < config.width 
 			||
-			wnsize.ws_row < (config.height/2) 
+			wnsize->ws_row < (config.height/2) 
 			){
-		return 1;
+		return 4;
 	}
 
 	printf("\033[2J"); 		//cleans screen
@@ -53,11 +53,17 @@ static inline int8_t updateTerminal(
 			fflush(stdout);
 			printf(ANSIESC_CDOWN);
 		}
-		if ( 
-				( i % config.width ) == 0 
-				) printf(ANSIESC_HABSOLUTE); 
-		printf(ANSIESC_CRIGHT);
-		printf(ANSIESC_CUPX4);
+
+		switch (config.adrsmode) {
+ 			case ADR_H:
+				if (i % config.width == 0) printf(ANSIESC_HABSOLUTE); 
+				printf(ANSIESC_CRIGHT);
+				printf(ANSIESC_CUPX4);
+				break;
+			case ADR_V:
+				if (i % config.height == 0) printf(ANSIESC_VABSOLUTE);
+				break;
+		}
 		fflush(stdout);
 
 

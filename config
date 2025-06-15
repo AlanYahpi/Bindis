@@ -6,8 +6,14 @@
 # 1 Vertical
 # Check your manufaturer's datasheet
 #
+# (values of 4 digits max)
 #
 # width = 128
 # height = 64
 # updateInterval = 1
 # adressingMode = 0
+
+width = 128
+height = 64
+updateInterval = 1
+adressingMode = 1
