@@ -10,10 +10,10 @@
 static inline int8_t configure(
 		struct config * config
 		){
-	config->width          = 0;
-	config->height         = 0;
-	config->updateInterval = 1;
-	config->adrsmode       = ADR_H;
+	config->width            = 0;
+	config->height           = 0;
+	config->timespec.tv_nsec = 1 * MStoNS;
+	config->adrsmode         = ADR_H;
 
 
 	FILE * fconfig = fopen(FCONFIG, "r");
@@ -32,7 +32,7 @@ static inline int8_t configure(
 		if (stringBuffer[0] != '#'){
 			if  	(!strcmp(stringBuffer, "width"))			config->width = intBuffer;
 			else if (!strcmp(stringBuffer, "height"))		  	config->height = intBuffer;
-			else if (!strcmp(stringBuffer, "updateInterval"))  	config->updateInterval = intBuffer;
+			else if (!strcmp(stringBuffer, "updateInterval"))  	config->timespec.tv_nsec = intBuffer * MStoNS;
 			else if (!strcmp(stringBuffer, "adressingMode"))  	config->adrsmode = intBuffer;
 		}
 

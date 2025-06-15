@@ -3,6 +3,7 @@
 #include <stdint.h>
 #include <unistd.h>
 #include <stdio.h>
+#include <time.h>
 
 static inline uint8_t closeManager(){
 	char c;
@@ -10,3 +11,4 @@ static inline uint8_t closeManager(){
 	if (c == 'q') return 0;
 	else return 1;
 }
+

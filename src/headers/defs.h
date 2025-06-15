@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stdint.h>
+#include <time.h>
 
 #define SHM_NAME "/xd"
 
@@ -8,7 +9,7 @@ struct config {
 	uint32_t width;
 	uint32_t height;
 	uint8_t  adrsmode;	
-	uint8_t  updateInterval;
+	struct timespec timespec;
 };
 
 #define FCONFIG "config"
@@ -40,3 +41,6 @@ struct config {
 #define UNIC_BLOCKFULL 		"\u2588"
 
 #define BYTE_SIZE 			8
+
+#define MStoNS 				1000000
+

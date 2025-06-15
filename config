@@ -7,6 +7,7 @@
 # Check your manufaturer's datasheet
 #
 # (values of 4 digits max)
+# update interval in MS
 #
 # width = 128
 # height = 64
@@ -15,5 +16,5 @@
 
 width = 128
 height = 64
-updateInterval = 1
+updateInterval = 1000
 adressingMode = 1

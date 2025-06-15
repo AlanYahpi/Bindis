@@ -1,6 +1,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <sys/mman.h>
+#include <time.h>
 #include <unistd.h>
 #include <limits.h>
 #include <termios.h>
@@ -64,7 +65,7 @@ int main(int agrc, char * argv[]){
 				&wnsize
 				);
 		if (isError) goto end;
-		sleep(config.updateInterval);
+		nanosleep(&config.timespec, NULL);
 	}
 
 
