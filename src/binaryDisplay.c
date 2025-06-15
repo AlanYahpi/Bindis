@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include <limits.h>
 #include <termios.h>
+#include <pthread.h>
 
 
 #include "headers/defs.h"
@@ -18,6 +19,14 @@ int main(int agrc, char * argv[]){
 	struct config config;
 	struct termios newt, oldt;
 	struct winsize wnsize;
+	uint8_t keys = 0;
+	keyManagerArgs keyManagerArgs = {
+		&keys,
+		&config.binds,
+		&config.InputInterval
+	};
+	config.InputInterval = config.Updateinterval;
+
 
 	isError = configure(&config);
 	if (isError) goto end;
@@ -35,6 +44,12 @@ int main(int agrc, char * argv[]){
 	isError = initTerminal(&newt, &oldt);
 	if (isError) goto end;
 
+	pthread_t keyManagementThread;
+	isError = pthread_create(&keyManagementThread, NULL, keysManager, (void*) &keyManagerArgs);
+	if (isError) goto end;
+
+	
+
 	uint8_t * buffer = 
 		mmap(
 			NULL,
@@ -46,7 +61,7 @@ int main(int agrc, char * argv[]){
 	uint8_t xdtest[] = {0xC2, 0xff, 0b11111101};
 
 
-	while (closeManager()){
+	while (!(keys & KEY_Q)){
 		/*
 		updateTerminal(
 				buffer,
@@ -56,7 +71,7 @@ int main(int agrc, char * argv[]){
 				);
 		*/
 
-		//this is for testing, real one is the upper one
+		//this is for testing, real is the upper one
 		
 		isError = updateTerminal(
 				xdtest,
@@ -65,12 +80,13 @@ int main(int agrc, char * argv[]){
 				&wnsize
 				);
 		if (isError) goto end;
-		nanosleep(&config.timespec, NULL);
+		nanosleep(&config.Updateinterval, NULL);
 	}
 
 
 
 end:
+	pthread_join(keyManagementThread, NULL);
 	shm_unlink(SHM_NAME);
 	if ( (isError != 2) || (isError != 3) ) finishTerminal(&oldt);
 

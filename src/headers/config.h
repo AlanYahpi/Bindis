@@ -12,8 +12,13 @@ static inline int8_t configure(
 		){
 	config->width            = 0;
 	config->height           = 0;
-	config->timespec.tv_nsec = 1 * MStoNS;
+	config->Updateinterval.tv_nsec = 1 * MStoNS;
+	config->Updateinterval.tv_sec = 0;
+	config->InputInterval.tv_nsec = (1/60 * 1000) * MStoNS;
+	config->InputInterval.tv_sec = 0;
 	config->adrsmode         = ADR_H;
+
+	config->binds.keyQ = 'q';
 
 
 	FILE * fconfig = fopen(FCONFIG, "r");
@@ -32,7 +37,7 @@ static inline int8_t configure(
 		if (stringBuffer[0] != '#'){
 			if  	(!strcmp(stringBuffer, "width"))			config->width = intBuffer;
 			else if (!strcmp(stringBuffer, "height"))		  	config->height = intBuffer;
-			else if (!strcmp(stringBuffer, "updateInterval"))  	config->timespec.tv_nsec = intBuffer * MStoNS;
+			else if (!strcmp(stringBuffer, "updateInterval"))  	config->Updateinterval.tv_nsec = intBuffer * MStoNS;
 			else if (!strcmp(stringBuffer, "adressingMode"))  	config->adrsmode = intBuffer;
 		}
 

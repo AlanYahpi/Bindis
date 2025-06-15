@@ -5,12 +5,32 @@
 
 #define SHM_NAME "/xd"
 
+struct binds {
+	char keyQ;
+	char keyA;
+	char keyB;
+	char keyC;
+	char keyD;
+	char keyF;
+	char keyG;
+	char keyH;
+};
+
 struct config {
 	uint32_t width;
 	uint32_t height;
 	uint8_t  adrsmode;	
-	struct timespec timespec;
+	struct timespec Updateinterval;
+	struct timespec InputInterval;
+	struct binds binds;
 };
+
+typedef struct {
+	uint8_t * keys;
+	struct binds * binds;
+	struct timespec * inputInterval;
+} keyManagerArgs;
+
 
 #define FCONFIG "config"
 
@@ -44,3 +64,13 @@ struct config {
 
 #define MStoNS 				1000000
 
+//keys
+
+#define KEY_Q 0b00000001
+#define KEY_A 0b00000010
+#define KEY_B 0b00000100
+#define KEY_C 0b00001000
+#define KEY_D 0b00010000
+#define KEY_F 0b00100000
+#define KEY_G 0b01000000
+#define KEY_H 0b10000000
