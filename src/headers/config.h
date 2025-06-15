@@ -34,6 +34,7 @@ static inline int8_t configure(
 	char  		stringBuffer[32];
 	uint32_t 	intBuffer;
 	char 		line[255];
+	char 		gpkeyCompare;
 
 	while (fgets(line, sizeof(line), fconfig) != NULL){
 		sscanf( line,
@@ -47,15 +48,17 @@ static inline int8_t configure(
 			else if (!strcmp(stringBuffer, "updateInterval"))  	config->Updateinterval.tv_nsec = intBuffer * MStoNS;
 			else if (!strcmp(stringBuffer, "adressingMode"))  	config->adrsmode = intBuffer;
 			else if (!strcmp(stringBuffer, "inputInterval"))  	config->InputInterval.tv_nsec = intBuffer * MStoNS;
-			else if (!strcmp(stringBuffer, "GPKEY")){
-				if 			(!strcmp(stringBuffer + 5+1, "A")) 			config->binds.keyA = (char) intBuffer;
-				else if 	(!strcmp(stringBuffer + 5+1, "B")) 			config->binds.keyB = (char) intBuffer;
-				else if 	(!strcmp(stringBuffer + 5+1, "C")) 			config->binds.keyC = (char) intBuffer;
-				else if 	(!strcmp(stringBuffer + 5+1, "D")) 			config->binds.keyD = (char) intBuffer;
-				else if 	(!strcmp(stringBuffer + 5+1, "E")) 			config->binds.keyE = (char) intBuffer;
-				else if 	(!strcmp(stringBuffer + 5+1, "F")) 			config->binds.keyF = (char) intBuffer;
-				else if 	(!strcmp(stringBuffer + 5+1, "G")) 			config->binds.keyG = (char) intBuffer;
-				else if 	(!strcmp(stringBuffer + 5+1, "Q")) 			config->binds.keyQ = (char) intBuffer;
+			else if (strcmp(stringBuffer, "GPKEY") == 45){  //predicts return value if "GPKEY" is part of "GPKEY-[A^G]" ('\0' - '-' = 45)
+															//check return value documentation of strcmp
+				sscanf(line, "%*6s%c %*c %c",&gpkeyCompare, (char*) &intBuffer);
+				if 			(gpkeyCompare == 'A') 			config->binds.keyA = (char) intBuffer;
+				else if 	(gpkeyCompare == 'B') 			config->binds.keyB = (char) intBuffer;
+				else if 	(gpkeyCompare == 'C') 			config->binds.keyC = (char) intBuffer;
+				else if 	(gpkeyCompare == 'D') 			config->binds.keyD = (char) intBuffer;
+				else if 	(gpkeyCompare == 'E') 			config->binds.keyE = (char) intBuffer;
+				else if 	(gpkeyCompare == 'F') 			config->binds.keyF = (char) intBuffer;
+				else if 	(gpkeyCompare == 'G') 			config->binds.keyG = (char) intBuffer;
+				else if 	(gpkeyCompare == 'Q') 			config->binds.keyQ = (char) intBuffer;
 			}
 		}
 
