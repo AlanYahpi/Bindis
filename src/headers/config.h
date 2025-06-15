@@ -33,7 +33,6 @@ static inline int8_t configure(
 
 		if  	(strcmp(stringBuffer, "width"))				config->width = intBuffer;
 		else if (strcmp(stringBuffer, "height"))		  	config->height = intBuffer;
-		else if (strcmp(stringBuffer, "pages"))  			config->pages = intBuffer;
 		else if (strcmp(stringBuffer, "updateInterval"))  	config->updateInterval = intBuffer;
 		else if (strcmp(stringBuffer, "adressingMode"))  	config->adrsmode = intBuffer;
 

@@ -38,7 +38,7 @@ static inline int8_t updateTerminal(
 	for (uint32_t i = 0; i < bufferBytes; i++){
 		
 		tmp = buffer[i];
-		for (uint8_t a = 0; a < CHAR_BIT; a+=2){
+		for (uint8_t a = 0; a < BYTE_SIZE; a+=2){
 
 			top  = 	(tmp & 0b01);
 			bott = 	(tmp & 0b10);
@@ -54,7 +54,7 @@ static inline int8_t updateTerminal(
 			printf(ANSIESC_CDOWN);
 		}
 		if ( 
-				( (bufferBytes + 1) % config.width ) == 0 
+				( i % config.width ) == 0 
 				) printf(ANSIESC_HABSOLUTE); 
 		printf(ANSIESC_CRIGHT);
 		printf(ANSIESC_CUPX4);

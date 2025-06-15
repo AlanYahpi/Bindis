@@ -7,7 +7,6 @@
 struct config {
 	uint32_t width;
 	uint32_t height;
-	uint32_t pages; 	//just set 1 if not apply
 	uint8_t  adrsmode;	
 	uint8_t  updateInterval;
 };
@@ -38,3 +37,5 @@ struct config {
 #define UNIC_BLOCKUP 		"\u2580"
 #define UNIC_BLOCKLOW 		"\u2584"
 #define UNIC_BLOCKFULL 		"\u2588"
+
+#define BYTE_SIZE 			8
