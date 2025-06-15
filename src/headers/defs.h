@@ -14,7 +14,7 @@ struct config {
 #define FCONFIG "config"
 
 
-//I gotta check if there are more, for now this is for SSD1306
+//I gotta check if there are more adressing modes, for now this is for SSD1306
 
 #define ADR_H 0
 #define ADR_V 1
