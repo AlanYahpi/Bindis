@@ -76,23 +76,22 @@ int main(int agrc, char * argv[]){
 
 
 	while (!(*keysMemory & KEY_Q)){
-		/*
 		updateTerminal(
 				buffer,
 				config,
 				size,
 				&wnsize
 				);
-		*/
 
 		//this is for testing, real is the upper one
-		
+/*		
 		isError = updateTerminal(
 				xdtest,
 				config,
 				3,
 				&wnsize
 				);
+*/
 		if (isError) goto end;
 		nanosleep(&config.Updateinterval, NULL);
 	}
