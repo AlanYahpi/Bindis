@@ -3,7 +3,8 @@
 #include <stdint.h>
 #include <time.h>
 
-#define SHM_NAME "/xd"
+#define SHM_MAIN "/bd"
+#define SHM_KEYS "/bdkeys"
 
 struct binds {
 	char keyQ;

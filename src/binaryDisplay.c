@@ -19,49 +19,63 @@ int main(int agrc, char * argv[]){
 	struct config config;
 	struct termios newt, oldt;
 	struct winsize wnsize;
-	uint8_t keys = 0;
-	keyManagerArgs keyManagerArgs = {
-		&keys,
-		&config.binds,
-		&config.InputInterval
-	};
+	uint8_t keysBuffer = 0;
 	config.InputInterval = config.Updateinterval;
+	int mainfd, keysfd;
 
 
-	isError = configure(&config);
+	//Init things
+	isError =  		configure(&config);
 	if (isError) goto end;
 	off_t size = config.width * config.height / CHAR_BIT;
 
-	isError = (!isatty(STDOUT_FILENO));
+	isError = (! 	isatty(STDOUT_FILENO));
 	if (isError) goto end;
 
-	int fd = memshareInit();
-	if (fd == -1) goto end;
-
-	isError = ftruncate(fd, size);
+	isError = 		memshareInit(&mainfd, &keysfd);
 	if (isError) goto end;
 
-	isError = initTerminal(&newt, &oldt);
+	isError = 		ftruncate(mainfd, size);
 	if (isError) goto end;
 
-	pthread_t keyManagementThread;
-	isError = pthread_create(&keyManagementThread, NULL, keysManager, (void*) &keyManagerArgs);
+	isError = 		ftruncate(keysfd, 1);
 	if (isError) goto end;
 
+	isError = 		initTerminal(&newt, &oldt);
+	if (isError) goto end;
 	
-
+	//memory mapping
 	uint8_t * buffer = 
 		mmap(
 			NULL,
 			size,
 			PROT_READ | PROT_WRITE,
 			MAP_SHARED,
-			fd, 0
+			mainfd, 0
 			);
+	uint8_t * keysMemory = 
+		mmap(
+			NULL,
+			1,
+			PROT_READ | PROT_WRITE,
+			MAP_SHARED,
+			keysfd, 0
+			);
+
+	//thread shit
+	keyManagerArgs keyManagerArgs = {
+		keysMemory,
+		&config.binds,
+		&config.InputInterval
+	};
+	pthread_t keyManagementThread;
+	isError = 		pthread_create(&keyManagementThread, NULL, keysManager, (void*) &keyManagerArgs);
+	if (isError) goto end;
+
 	uint8_t xdtest[] = {0xC2, 0xff, 0b11111101};
 
 
-	while (!(keys & KEY_Q)){
+	while (!(*keysMemory & KEY_Q)){
 		/*
 		updateTerminal(
 				buffer,
@@ -87,8 +101,11 @@ int main(int agrc, char * argv[]){
 
 end:
 	pthread_join(keyManagementThread, NULL);
-	shm_unlink(SHM_NAME);
+	shm_unlink(SHM_MAIN);
 	if ( (isError != 2) || (isError != 3) ) finishTerminal(&oldt);
+
+
+
 
 	switch (isError) {
 		case 1:

@@ -10,27 +10,43 @@
 #include <errno.h>
 //shared memory
 
-static inline int memshareInit(){
+static inline int memshareInit(int * mainfd, int * keysfd){
 
-start:
-	int fileDesc = shm_open(
-			SHM_NAME,
+main:
+	*mainfd = shm_open(
+			SHM_MAIN,
 			O_CREAT | O_EXCL | O_RDWR,
 			S_IRWXO);
 
-	if (fileDesc == -1){
+	if (*mainfd == -1){
 		if (errno == EEXIST){
-			shm_unlink(SHM_NAME); 
-			goto start;
+			shm_unlink(SHM_MAIN); 
+			goto main;
 		}
-		else return -1;
-	} 
+		else return 1;
+	}
 
-	return fileDesc;
+keys:
+
+	*keysfd = shm_open(
+			SHM_KEYS,
+			O_CREAT | O_EXCL | O_RDWR,
+			S_IRWXO);
+	if (*keysfd == -1){
+		if (errno == EEXIST){
+			shm_unlink(SHM_KEYS);
+			goto keys;
+		}
+		else return 1;
+	}
+
+	return 0;
+
 }
 
 static inline int8_t finish(){
-	shm_unlink(SHM_NAME);
+	shm_unlink(SHM_MAIN);
+	shm_unlink(SHM_KEYS);
 	
 	return 0;
 }
