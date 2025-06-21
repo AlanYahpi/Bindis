@@ -40,5 +40,5 @@
 
 width = 128
 height = 64
-updateInterval = 1000
-adressingMode = 1
+updateInterval = 3000
+adressingMode = 0

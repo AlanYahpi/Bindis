@@ -66,6 +66,8 @@ static inline int8_t configure(
 	}
 	if (config->height == 0 || config->width == 0) return 2;
 
+	printf("Update %li", config->Updateinterval.tv_nsec);
+
 
 
 	return 0;

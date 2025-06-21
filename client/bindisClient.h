@@ -16,6 +16,7 @@ struct bd {
 	uint32_t  width;
 	uint32_t  height;
 	uint8_t   pages;
+	long      size;
 };
 
 static inline uint8_t bindisInit(struct bd * bd){
@@ -26,41 +27,24 @@ static inline uint8_t bindisInit(struct bd * bd){
 		return 1;
 	} 
 
-
-main:
-	mainfd = shm_open(
-			SHM_MAIN,
-			O_EXCL | O_RDWR,
-			S_IRWXO);
-
+	mainfd = shm_open(SHM_MAIN,	O_RDWR,	0);
 	if (mainfd == -1){
-		if (errno == EEXIST){
-			shm_unlink(SHM_MAIN); 
-			goto main;
-		}
-		else return 1;
-	}
+		perror("Shared memmory (main)"); 
+		return 1;
+	} 
 
-keys:
-
-	keyfd = shm_open(
-			SHM_KEYS,
-			O_EXCL | O_RDWR,
-			S_IRWXO);
+	keyfd =  shm_open(SHM_KEYS, O_RDWR, 0);
 	if (keyfd == -1){
-		if (errno == EEXIST){
-			shm_unlink(SHM_KEYS);
-			goto keys;
-		}
-		else return 1;
-	}
+		perror("Shared memmory (keys)");
+		return 1;
+	} 
 	
 	bd->pages = bd->height / CHAR_BIT;
-	off_t size = bd->width * bd->pages;
+	bd->size = bd->width * bd->pages;
 
 	bd->buffer = (uint8_t *) mmap(
 								NULL,
-								size,
+								bd->size,
 								PROT_READ | PROT_WRITE,
 								MAP_SHARED,
 								mainfd, 0
@@ -73,6 +57,8 @@ keys:
 								keyfd, 0
 								);
 
+	close(mainfd);
+	close(keyfd);
 	return 0;
 }
 

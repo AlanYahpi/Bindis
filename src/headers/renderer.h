@@ -36,31 +36,34 @@ static inline int8_t updateTerminal(
 	
 
 	for (uint32_t i = 0; i < bufferBytes; i++){
-		
 		tmp = buffer[i];
-		for (uint8_t a = 0; a < BYTE_SIZE; a+=2){
 
+		for (uint8_t a = 0; a < BYTE_SIZE / 2; a++){
 			top  = 	(tmp & 0b01);
 			bott = 	(tmp & 0b10);
 			tmp >>= 2;
 
-			fflush(stdout);
-
 			//box drawing characters
-			if 		(top && bott) 	printf(UNIC_BLOCKFULL 	ANSIESC_CLEFT);
-			else if (top && !bott)	printf(UNIC_BLOCKUP 	ANSIESC_CLEFT);
-			else if (!top && bott) 	printf(UNIC_BLOCKLOW 	ANSIESC_CLEFT);
-			fflush(stdout);
+			if 		( top  &&  bott) 	printf(UNIC_BLOCKFULL 	ANSIESC_CLEFT);
+			else if ( top  && !bott)	printf(UNIC_BLOCKUP 	ANSIESC_CLEFT);
+			else if (!top  &&  bott) 	printf(UNIC_BLOCKLOW 	ANSIESC_CLEFT);
 			printf(ANSIESC_CDOWN);
+
+			fflush(stdout);
+//			usleep(40000);
 		}
 
 		switch (config.adrsmode) {
  			case ADR_H:
-				if (i % config.width == 0) printf(ANSIESC_HABSOLUTE); 
-				printf(ANSIESC_CRIGHT);
-				printf(ANSIESC_CUPX4);
+				if (i % config.width == 0 && i != 0) {
+					printf(ANSIESC_HABSOLUTE);
+				} else {
+					printf(ANSIESC_CRIGHT);
+					printf(ANSIESC_CUPX4);
+				}
 				break;
 			case ADR_V:
+				//on contruction
 				if (i % config.height == 0) printf(ANSIESC_VABSOLUTE);
 				break;
 		}

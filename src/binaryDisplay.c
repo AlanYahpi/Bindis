@@ -76,7 +76,7 @@ int main(int agrc, char * argv[]){
 
 
 	while (!(*keysMemory & KEY_Q)){
-		updateTerminal(
+		isError = updateTerminal(
 				buffer,
 				config,
 				size,
@@ -102,6 +102,9 @@ end:
 	pthread_join(keyManagementThread, NULL);
 	shm_unlink(SHM_MAIN);
 	if ( (isError != 2) || (isError != 3) ) finishTerminal(&oldt);
+
+	close(mainfd);
+	close(keysfd);
 
 
 

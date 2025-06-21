@@ -16,7 +16,8 @@ main:
 	*mainfd = shm_open(
 			SHM_MAIN,
 			O_CREAT | O_EXCL | O_RDWR,
-			S_IRWXO);
+//			S_IRUSR | S_IWUSR);
+			0666);
 
 	if (*mainfd == -1){
 		if (errno == EEXIST){
@@ -31,7 +32,8 @@ keys:
 	*keysfd = shm_open(
 			SHM_KEYS,
 			O_CREAT | O_EXCL | O_RDWR,
-			S_IRWXO);
+//			S_IRUSR | S_IWUSR);
+			0666);
 	if (*keysfd == -1){
 		if (errno == EEXIST){
 			shm_unlink(SHM_KEYS);
