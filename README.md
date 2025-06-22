@@ -13,7 +13,7 @@ A terminal renderer for previewing memory buffer with target on monochromatic di
 - Recommended to run client and main in a single user (same as above unless you're a linux maniac AKA. gentoo user)
 
 ### Instalation
-The **main program** can be installed with a simple 
+The **main program** can be compiled with a simple 
 ``` bash
 make
 ```
@@ -28,7 +28,7 @@ I recomend using `make dev` in `client/` when testing (that i hope is always). I
 
 ### Recomendations
 - Undestand hexdecimal representation of binary values so you can make your values less verbose (**0xFF** *[4 digits]*  =  **0b11111111** *[10 digits]*)
-- Use python shell to try values
+- Use python shell to try value conversion between binary and hexadecimal
 - Bindis can be more comfortabe in a good tiling window manager, make one that match your thinking model.
 Example of my test workspace
 
