@@ -83,15 +83,6 @@ int main(int agrc, char * argv[]){
 				&wnsize
 				);
 
-		//this is for testing, real is the upper one
-/*		
-		isError = updateTerminal(
-				xdtest,
-				config,
-				3,
-				&wnsize
-				);
-*/
 		if (isError){
 			pthread_cancel(keyManagementThread);
 			goto end;
@@ -104,7 +95,7 @@ int main(int agrc, char * argv[]){
 end:
 	pthread_join(keyManagementThread, NULL);
 	shm_unlink(SHM_MAIN);
-//	if ( (isError != 2) || (isError != 3) ) finishTerminal(&oldt);
+	if ( (isError != 2) || (isError != 3) ) finishTerminal(&oldt);
 	finishTerminal(&oldt);
 
 	close(mainfd);

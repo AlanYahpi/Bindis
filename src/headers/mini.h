@@ -7,19 +7,6 @@
 
 #include "defs.h"
 
-static inline uint8_t closeManager(uint8_t * keys, struct binds binds){
-	if (*keys & KEY_Q) return 0;
-	else {
-		char c;
-		read(STDIN_FILENO, &c, 1);
-		if (c == binds.keyQ) {
-			*keys |= KEY_Q; 
-			return 0;
-		}		
-		return 1;
-	}
-}
-
 static inline void * keysManager(
 				void * arguments
 				){
