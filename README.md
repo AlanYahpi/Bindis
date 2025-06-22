@@ -4,8 +4,6 @@ A terminal renderer for previewing memory buffer with target on monochromatic di
   <img src="img/name.png" alt="name" />
 </p>
 
-#### Note
-
 ## Use it
 ### Requeriments
 
@@ -31,28 +29,8 @@ I recomend using `make dev` in `client/` when testing (that i hope is always). I
 ### Recomendations
 - Undestand hexdecimal representation of binary values so you can make your values less verbose (**0xFF** *[4 digits]*  =  **0b11111111** *[10 digits]*)
 - Use python shell to try values
-
-Example
-``` python
->>> hex(0b1011111)
-'0x5f'
->>> hex(0b10111111)
-'0xbf'
->>> bin(0x06)
-'0b110'
->>> bin(0x06 << 2)
-'0b11000'
->>> hex(0x06 << 2)
-'0x18'
->>> bin(0xfb)
-'0b11111011'
->>> hex(0xfb >> 1)
-'0x7d'
-```
 - Bindis can be more comfortabe in a good tiling window manager, make one that match your thinking model.
 Example of my test workspace
-
-![screenshot](img/ss.png)
 
 ## API
 The API in `client/bindisClient.h` handles safety the POSIX shared memory (while you don't move it) and gives you a pointer to the shared buffer. Your shared buffer, what in real life will read your display, is an array of **uint8_t** which size of bytes (AKA. number of elements of buffer) can be read in `bd->size`.
@@ -72,6 +50,15 @@ struct bd {
 
 ## Example of use
 ``` c
+int main(int argc, char * argv[]){
+	//bindis initialization process, please set the same resolution values
+	//   that you wrote on your config file.
+	struct bd bd;
+	bd.width  = 128;
+	bd.height = 64;
+	if (bindisInit(&bd)) return 1;
+
+
 	bd.buffer[00] = 0b11111111;
 	bd.buffer[01] = 0b10001001;
 	bd.buffer[02] = 0b10001001;
@@ -99,6 +86,11 @@ struct bd {
 	bd.buffer[29] = 0b10001001;
 	bd.buffer[30] = 0b10001001;
 	bd.buffer[31] = 0b01110001;
+
+	
+
+	bindisFinish();   return 0;
+}
 ```
 
 ## To do
