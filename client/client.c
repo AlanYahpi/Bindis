@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include <sys/mman.h>
 #include <stdint.h>
 #include <limits.h>
@@ -16,7 +15,6 @@ int main(int argc, char * argv[]){
 
 
 	bd.buffer[0] = 0b0101;
-	getchar();
 
 	
 

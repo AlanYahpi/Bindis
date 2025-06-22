@@ -81,7 +81,7 @@ static inline int8_t initTerminal(
 		){
 	printf(
 			"\033[?1049h" 		//alternate buffer
-//			"\033[?25l" 		//hide cursor
+			"\033[?25l" 		//hide cursor
 			ANSIESC_HOME
 			);
 	fflush(stdout);
