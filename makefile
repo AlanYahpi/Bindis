@@ -1,3 +1,4 @@
+.SILENT:
 CC = gcc
 FLAGS = -g -O0
 TARGET = bin/binDis

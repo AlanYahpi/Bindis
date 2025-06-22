@@ -16,7 +16,7 @@ struct bd {
 	uint32_t  width;
 	uint32_t  height;
 	uint8_t   pages;
-	long      size;
+	size_t    size;
 };
 
 static inline uint8_t bindisInit(struct bd * bd){

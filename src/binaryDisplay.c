@@ -92,7 +92,10 @@ int main(int agrc, char * argv[]){
 				&wnsize
 				);
 */
-		if (isError) goto end;
+		if (isError){
+			pthread_cancel(keyManagementThread);
+			goto end;
+		} 
 		nanosleep(&config.Updateinterval, NULL);
 	}
 
@@ -101,7 +104,8 @@ int main(int agrc, char * argv[]){
 end:
 	pthread_join(keyManagementThread, NULL);
 	shm_unlink(SHM_MAIN);
-	if ( (isError != 2) || (isError != 3) ) finishTerminal(&oldt);
+//	if ( (isError != 2) || (isError != 3) ) finishTerminal(&oldt);
+	finishTerminal(&oldt);
 
 	close(mainfd);
 	close(keysfd);

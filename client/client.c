@@ -14,7 +14,7 @@ int main(int argc, char * argv[]){
 	if (bindisInit(&bd)) return 1;
 
 
-	bd.buffer[0] = 0b0101;
+	bd.buffer[0] = 0b1;
 
 	
 

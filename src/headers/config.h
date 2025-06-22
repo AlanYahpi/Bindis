@@ -10,13 +10,14 @@
 static inline int8_t configure(
 		struct config * config
 		){
-	config->width            = 0;
-	config->height           = 0;
+	//default configurations
+	config->width                  = 0;
+	config->height                 = 0;
 	config->Updateinterval.tv_nsec = 1 * MStoNS;
-	config->Updateinterval.tv_sec = 0;
-	config->InputInterval.tv_nsec = (1/60 * 1000) * MStoNS;
-	config->InputInterval.tv_sec = 0;
-	config->adrsmode         = ADR_H;
+	config->Updateinterval.tv_sec  = 0;
+	config->InputInterval.tv_nsec  = (1/60 * 1000) * MStoNS;
+	config->InputInterval.tv_sec   = 0;
+	config->adrsmode               = ADR_H;
 
 	config->binds.keyQ = 'q';
 	config->binds.keyA = 'z';
@@ -65,10 +66,6 @@ static inline int8_t configure(
 
 	}
 	if (config->height == 0 || config->width == 0) return 2;
-
-	printf("Update %li", config->Updateinterval.tv_nsec);
-
-
 
 	return 0;
 }
