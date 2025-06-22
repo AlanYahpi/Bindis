@@ -1,5 +1,5 @@
 # BinDis
-A tool for previewing memory changes of monochromatic displays like SSD1306 so you don't waste compiling SDK's and long flash times of your MCU/MPU 's and depreciate your electronic components.
+A terminal renderer for previewing memory buffer with target on monochromatic displays like SSD1306 so you don't waste compiling SDK's and long flash times of your MCU/MPU 's and depreciate your electronic components.
 <p align="center">
   <img src="img/name.png" alt="name" />
 </p>
