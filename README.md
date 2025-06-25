@@ -30,7 +30,6 @@ I recomend using `make dev` in `client/` when testing (that i hope is always). I
 - Undestand hexdecimal representation of binary values so you can make your values less verbose (**0xFF** *[4 digits]*  =  **0b11111111** *[10 digits]*)
 - Use python shell to try value conversion between binary and hexadecimal
 - Bindis can be more comfortabe in a good tiling window manager, make one that match your thinking model.
-Example of my test workspace
 
 ## API
 The API in `client/bindisClient.h` handles safety the POSIX shared memory (while you don't move it) and gives you a pointer to the shared buffer. Your shared buffer, what in real life will read your display, is an array of **uint8_t** which size of bytes (AKA. number of elements of buffer) can be read in `bd->size`.
