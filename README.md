@@ -32,7 +32,7 @@ I recomend using `make dev` in `client/` when testing (that i hope is always). I
 - Bindis can be more comfortabe in a good tiling window manager, make one that match your thinking model.
 
 ## API
-The API in `client/bindisClient.h` handles safety the POSIX shared memory (while you don't move it) and gives you a pointer to the shared buffer. Your shared buffer, what in real life will read your display, is an array of **uint8_t** which size of bytes (AKA. number of elements of buffer) can be read in `bd->size`.
+The API in `client/bindisClient.h` handles safety the POSIX shared memory (while you don't move it) and gives you a pointer to the shared buffer. Your shared buffer, the memory space that in real life would read your display, is an array of **uint8_t** which size of bytes (AKA. number of elements of buffer) can be read in `bd->size`.
 
 ### Struct bd
 The `bd` struct is a data structure to help API initialization. It can be read/write without any risk after correct initialization is made (and if you do not try to access array indexes greater than its sizes).
@@ -88,7 +88,7 @@ int main(int argc, char * argv[]){
 
 	
 
-	bindisFinish();   return 0;
+	return 0;
 }
 ```
 
