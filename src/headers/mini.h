@@ -14,9 +14,9 @@ static inline void * keysManager(
 
 	char c;
 	while (!(*args->keys & KEY_Q)){
-		read(STDIN_FILENO, &c, 1);
-	//	c = 'q';
 		*args->keys = 0;
+		c = 0;
+		read(STDIN_FILENO, &c, 1);
 
 		if 		(c == args->binds->keyQ) *args->keys |= KEY_Q;
 		else if (c == args->binds->keyA) *args->keys |= KEY_A;
