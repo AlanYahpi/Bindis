@@ -9,7 +9,7 @@ A terminal renderer for previewing memory buffer with target on monochromatic di
 
 - Bit level mineset (use of 0xDEADBEEF at least once)
 - UTF-8 & ANSI terminal (nothing to check while not using legacy UNIX)
-- POSIX compilant system (same parenthesis but now excluding Windows)
+- POSIX compatible system (same parenthesis but now excluding Windows)
 - Recommended to run client and main in a single user (same as above unless you're a linux maniac AKA. gentoo user)
 
 ### Instalation
@@ -33,6 +33,8 @@ I recomend using `make dev` in `client/` when testing (that i hope is always). I
 
 ## API
 The API in `client/bindisClient.h` handles safety the POSIX shared memory (while you don't move it) and gives you a pointer to the shared buffer. Your shared buffer, the memory space that in real life would read your display, is an array of **uint8_t** which size of bytes (AKA. number of elements of buffer) can be read in `bd->size`.
+
+There is no need for free's, I used static memory and the dynamic shared memory is handled entirely by the kernel.
 
 ### Struct bd
 The `bd` struct is a data structure to help API initialization. It can be read/write without any risk after correct initialization is made (and if you do not try to access array indexes greater than its sizes).
