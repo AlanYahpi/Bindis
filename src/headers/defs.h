@@ -60,7 +60,3 @@ typedef struct {
 #define UNIC_BLOCKLOW 		"\u2584"
 #define UNIC_BLOCKFULL 		"\u2588"
 
-#define BYTE_SIZE 			8
-
-#define MStoNS 				1000000
-

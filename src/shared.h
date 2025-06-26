@@ -13,3 +13,9 @@
 #define KEY_E 0b00100000
 #define KEY_F 0b01000000
 #define KEY_G 0b10000000
+
+#define BYTE_SIZE 			8
+
+
+#define MStoNS 			1000000
+#define DEFAULT_ITIME 	1/60*1000* MStoNS
