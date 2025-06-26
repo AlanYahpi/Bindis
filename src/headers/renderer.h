@@ -63,7 +63,6 @@ static inline int8_t updateTerminal(
 				}
 				break;
 			case ADR_V:
-				//on contruction
 				if ( ( (i+1)*BYTE_SIZE) % config.height == 0 && i != 0) {
 					printf("\033[%iA", i*BYTE_SIZE);
 					printf(ANSIESC_CRIGHT);
