@@ -1,8 +1,3 @@
-#include <sys/mman.h>
-#include <stdint.h>
-#include <limits.h>
-#include <unistd.h>
-
 #include "bindisClient.h"
 
 int main(int argc, char * argv[]){
@@ -12,11 +7,11 @@ int main(int argc, char * argv[]){
 	bd.width  = 128;
 	bd.height = 64;
 	if (bindisInit(&bd)) return 1;
-
-
-	bd.buffer[0] = 0b1;
-
+	/***/
 	
+
+	bd.buffer[0] = 0xff;
+
 
 	return 0;
 }

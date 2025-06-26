@@ -10,6 +10,8 @@
 
 #include "../src/shared.h"
 
+#define mkeyPressed(k) (*bd.keys & k)
+
 struct bd {
 	uint8_t * buffer;
 	uint8_t * keys;
@@ -62,7 +64,8 @@ static inline uint8_t bindisInit(struct bd * bd){
 	return 0;
 }
 
-static inline void bindisFinish(){
-	shm_unlink(SHM_MAIN);
-	shm_unlink(SHM_KEYS);
+static inline uint8_t keyPressed(uint8_t key, struct bd bd){
+	if (*bd.keys & key) return 1;
+	else return 0;
 }
+
