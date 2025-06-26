@@ -96,9 +96,9 @@ int main(int argc, char * argv[]){
 
 ## To do
 - [x] Make the start process for users
-- [ ] Look if it can be work as a binary in PATH
+- [x] Look if it can be work as a binary in PATH (it might but could be very opaque)
 - [x] Add general purpose keys
-- [ ] Add general purpose keys API
+- [x] Add general purpose keys API
 - [x] Make something to differenciate the keys management in the shared memory or make another memory block
 - [ ] Make make or adapt config parser for client
 - [x] Add the vertical adressing mode
