@@ -44,13 +44,13 @@ static inline int8_t updateTerminal(
 			tmp >>= 2;
 
 			//box drawing characters
-			if 		( top  &&  bott) 	printf(UNIC_BLOCKFULL 	ANSIESC_CLEFT);
+			if 	    ( top  &&  bott) 	printf(UNIC_BLOCKFULL 	ANSIESC_CLEFT);
 			else if ( top  && !bott)	printf(UNIC_BLOCKUP 	ANSIESC_CLEFT);
 			else if (!top  &&  bott) 	printf(UNIC_BLOCKLOW 	ANSIESC_CLEFT);
 			printf(ANSIESC_CDOWN);
 
 			fflush(stdout);
-//			usleep(40000);
+//			usleep(40000);/*debug*/
 		}
 
 		switch (config.adrsmode) {
@@ -64,7 +64,11 @@ static inline int8_t updateTerminal(
 				break;
 			case ADR_V:
 				//on contruction
-				if (i % config.height == 0) printf(ANSIESC_VABSOLUTE);
+				if ( ( (i+1)*BYTE_SIZE) % config.height == 0 && i != 0) {
+					printf("\033[%iA", i*BYTE_SIZE);
+					printf(ANSIESC_CRIGHT);
+//					printf("\033[2J"); 		/*debug*/
+				}
 				break;
 		}
 		fflush(stdout);

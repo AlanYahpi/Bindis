@@ -99,7 +99,7 @@ int main(int argc, char * argv[]){
 - [ ] Add general purpose keys API
 - [x] Make something to differenciate the keys management in the shared memory or make another memory block
 - [ ] Make make or adapt config parser for client
-- [ ] Add the vertical adressing mode
+- [x] Add the vertical adressing mode
 - [ ] Add a debuger
 - [ ] Finish the preceding points so I can make the project that needed this tool
 
