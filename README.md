@@ -107,5 +107,3 @@ int main(int argc, char * argv[]){
 This projects was not made with abstraction libraries in mind but for devs working bit level on applications on systems like the project adjacent to this one, libraries or anything this can be useful for.
 
 If is needed a code/structure change for a library to work with this tool, I can add it if is not specific for libraries.
-
-> PD. Zed fucked up my whole first beautyful README file, so if you see poorly redacted this one, blame Zed. Nvim would never jump to use 95% of my CPU and break my video rendering (even if it does, it let me get my swap file back).
